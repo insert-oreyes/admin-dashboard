@@ -1,7 +1,15 @@
 import Link from 'next/link'
+import { useState } from 'react'
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
 
 const Navbar = () => {
+  const [navbarMenu, setNavbarMenu] = useState('false')
+
+  const handleNavbar = () => {
+    setNavbarMenu(!navbarMenu)
+    console.log('I am:', navbarMenu)
+  }
+
   const navBarLinks = (
     <>
       <li className='p-4'>
@@ -27,11 +35,23 @@ const Navbar = () => {
         </Link>
         <ul className='sm:flex hidden'>{navBarLinks}</ul>
 
-        <div className='sm:hidden block z-10'>
-          <AiOutlineMenu size='20' />
+        {/* Mobile menu button */}
+        <div className='sm:hidden block z-10' onClick={handleNavbar}>
+          {navbarMenu ? (
+            <AiOutlineClose size='20' />
+          ) : (
+            <AiOutlineMenu size='20' />
+          )}
         </div>
 
-        <div className='sm:hidden bg-white absolute flex items-center justify-center top-0 right-0 bottom-0 left-0 w-full h-screen ease-in duration-300 text-center'>
+        {/* Mobile menu Navbar */}
+        <div
+          className={
+            navbarMenu
+              ? 'sm:hidden bg-white w-full h-screen absolute right-0 bottom-0 left-0 top-0 flex items-center justify-center text-center ease-in duration-300'
+              : 'sm:hidden bg-white w-full h-screen absolute right-0 bottom-0 left-[-100%] top-0 flex items-center justify-center text-center ease-in duration-300'
+          }
+        >
           <ul>
             <li className='p-4 text-4xl hover:text-gray-300'>
               <Link href='/about'>About</Link>
